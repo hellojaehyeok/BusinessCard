@@ -1,4 +1,7 @@
 import styles from './app.module.css';
+import LogIn from './components/logIn/logIn'
+import Header from './components/header/header'
+
 
 function App() {
 
@@ -6,13 +9,15 @@ function App() {
 
   return (
     <div className="App">
-      <header className={styles.header}>
-        Business Card Maker
-      </header>
 
-      <footer className={styles.footer}>
-        Made by Song jae hyeok
-      </footer>
+      {/* LogIn Page */}
+      <div>
+        <Header />
+        <LogIn />
+      </div>
+
+
+
     </div>
   );
 }
