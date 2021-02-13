@@ -1,4 +1,4 @@
-@value makerDarkGray, makerSkyBlue, makerShadow from "../../common/color.css";
+@value makerDarkGray, makerSkyBlue, makerShadow, makerShadowInset from "../../common/color.css";
 
 section.loginPageWrap{
     position: absolute;
@@ -8,7 +8,6 @@ section.loginPageWrap{
     display: flex;
     flex-direction: column;
     text-align: center;
-    padding: 50px;
     border-radius: 30px;
     box-shadow: makerShadow;
 }
@@ -42,6 +41,5 @@ ul.listWrap > li > button{
 }
 
 ul.listWrap > li > button:active{
-    box-shadow: inset -2px -2px 5px #fff,
-                inset 3px 3px 5px #babecc;
+    box-shadow: makerShadowInset;
 }

@@ -1,5 +1,10 @@
 @value makerDarkGray from "../../common/color.css";
 
 footer{
+    bottom: 0;
+    margin: 0 50px 50px;
+}
+
+footer > p{
     color: makerDarkGray;
 }

@@ -6,7 +6,9 @@ const Footer = (props) => {
 
     return(
         <footer>
-            Made by Song Jae Hyeok
+            <p>
+                Made by Song Jae Hyeok
+            </p>
         </footer>
     );
 };
