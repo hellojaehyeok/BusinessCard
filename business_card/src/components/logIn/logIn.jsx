@@ -15,11 +15,11 @@ const Login = ({authService}) => {
 
 
     return(
-        <section className={styles.logInWrap}>
+        <section className={styles.loginPageWrap}>
             <Header />
-            <section>
-                <h1>Login</h1>
-                <ul>
+            <section className={styles.loginWrap}>
+                <h1 className={styles.loginTitle}>Login</h1>
+                <ul className={styles.listWrap}>
                     <li>
                         <button onClick={onLogin}>Google</button>
                     </li>

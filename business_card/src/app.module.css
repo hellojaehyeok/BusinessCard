@@ -1,6 +1,12 @@
 
 @value makerSkyBlue from "./common/color.css";
 
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
 body{
-    background-color: #e9edf0;
+    background-color: makerSkyBlue;
 }

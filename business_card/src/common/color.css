@@ -1,3 +1,5 @@
 
 
-@value makerSkyBlue : #e9edf0;
+@value makerDarkGray: #454545;
+@value makerSkyBlue: #e9edf0;
+@value makerShadow: -2px -2px 5px #fff, 3px 3px 5px #babecc;

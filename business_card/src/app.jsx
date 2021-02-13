@@ -7,7 +7,7 @@ function App({authService}) {
 
 
   return (
-    <div className="App">
+    <div>
         <Login authService={authService}/>
     </div>
   );
