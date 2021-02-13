@@ -1,23 +1,14 @@
 import styles from './app.module.css';
-import LogIn from './components/logIn/logIn'
-import Header from './components/header/header'
+import Login from './components/logIn/login'
 
 
-function App() {
+function App({authService}) {
 
 
 
   return (
     <div className="App">
-
-      {/* LogIn Page */}
-      <div>
-        <Header />
-        <LogIn />
-      </div>
-
-
-
+        <Login authService={authService}/>
     </div>
   );
 }
