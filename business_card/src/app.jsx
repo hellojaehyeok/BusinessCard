@@ -12,7 +12,7 @@ function App({authService}) {
 
 
   return (
-    <div>
+    <div className={styles.app}>
       <BrowserRouter>
         <Switch>
 

@@ -1,0 +1,22 @@
+@value makerShadow from '../../common/color.css';
+
+section.makerPageWrap{
+    width: 100%;
+    height: 100%;
+    display: flex; 
+    flex-direction: column;
+}
+
+div.makerWrap{
+    display: flex;
+    flex: 1;
+    margin: 30px;
+    box-shadow: makerShadow;
+    border-radius: 30px;
+}
+
+@media screen and (max-width: 1000px){
+    div.makerWrap{
+        flex-direction: column;
+    }
+}
