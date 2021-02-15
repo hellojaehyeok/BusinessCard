@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './editor.module.css'
 import EditorForm from './editorForm/editorForm'
 
-const Editor = (props) => {
+const Editor = ({cards}) => {
     
     return(
         <section className={styles.editor}>
@@ -10,7 +10,7 @@ const Editor = (props) => {
                 Card Editor
             </h1>
 
-            <EditorForm />
+            {cards.map(card => <EditorForm card={card}/>)}
         </section>
     );
 };

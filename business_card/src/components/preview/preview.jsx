@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './preview.module.css';
-import PreviewForm from './previewForm/previewForm';
+import PreviewCard from './previewCard/previewCard';
 
-const Preview = (props) => {
+const Preview = ({cards}) => {
     
 
     return(
@@ -10,8 +10,9 @@ const Preview = (props) => {
             <h1 className={styles.previewTitle}>
                 Card Preview
             </h1>
-
-            <PreviewForm />
+            <ul>
+                {cards.map(card => <PreviewCard card={card}/>)}
+            </ul>
         </section>
     );
 };
