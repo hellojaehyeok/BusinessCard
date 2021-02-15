@@ -1,8 +1,9 @@
 import React from 'react';
 import styles from './editor.module.css'
+import EditorAddForm from './editorAddForm/editorAddForm';
 import EditorForm from './editorForm/editorForm'
 
-const Editor = ({cards}) => {
+const Editor = ({cards, addCard}) => {
     
     return(
         <section className={styles.editor}>
@@ -10,7 +11,9 @@ const Editor = ({cards}) => {
                 Card Editor
             </h1>
 
-            {cards.map(card => <EditorForm card={card}/>)}
+            {cards.map(card => <EditorForm key={card.id} card={card}/>)}
+
+            <EditorAddForm onAdd={addCard}/>
         </section>
     );
 };

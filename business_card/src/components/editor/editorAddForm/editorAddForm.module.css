@@ -1,0 +1,62 @@
+@value makerSkyBlue, makerShadow, makerShadowInset from '../../../common/color.css';
+
+form.editorForm{
+    width: 80%;
+    margin: 0 auto 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+form.editorForm > div{
+    width: 100%;
+    display: flex;
+    margin: 5px 0;
+}
+
+form.editorForm input{
+    flex: 1;
+    margin: 0 5px;
+    padding: 10px 10px;
+    border: 0;
+    border-radius: 10px;
+    background-color: makerSkyBlue;
+    box-shadow: makerShadowInset;
+}
+
+form.editorForm select{
+    flex: 1;
+    margin: 0 5px;
+    padding: 10px 10px;
+    border: 0;
+    border-radius: 10px;
+    outline: none;
+    background-color: makerSkyBlue;
+    box-shadow: makerShadowInset;
+}
+
+form.editorForm textarea{
+    width: 100%;
+    margin: 0 5px;
+    padding: 10px 10px;
+    border: 0;
+    border-radius: 10px;
+    outline: none;
+    background-color: makerSkyBlue;
+    box-shadow: makerShadowInset;
+    resize: none;
+}
+
+form.editorForm button{
+    flex: 1;
+    margin: 0 5px;
+    padding: 10px 10px;
+    border: 0;
+    border-radius: 5px;
+    outline: none;
+    background-color: makerSkyBlue;
+    box-shadow: makerShadow;
+}
+
+form.editorForm button:active{
+    box-shadow: makerShadowInset;
+}
