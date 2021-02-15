@@ -1,27 +1,71 @@
-import React from 'react';
+import React  from 'react';
 import styles from './editorForm.module.css';
 
-const EditorForm = ({card}) => {
+const EditorForm = ({card, updateCard, deleteCard}) => {
 
     const {name, company, job, email, introduce, fileName, fileURL} = card;
 
-    const onSubmit = (e) => {
+    const onChange = (e) => {
+        if(e.currentTarget == null){
+            return;
+        }
         e.preventDefault();
-        console.log('button');
+        updateCard({
+            ...card,
+            [e.currentTarget.name]: e.currentTarget.value,
+        })
+        console.log(e.currentTarget.name);
+    }
+
+    const onSubmit = () => {
+        deleteCard(card);
     }
 
     return(
         <form className={styles.editorForm}>
             <div>
-                <input type="text" name="name" value={name} placeholder="이름을 입력하세요" className={styles.name}/>
-                <input type="text" name="company" value={company} placeholder="회사를 입력하세요" className={styles.company}/>
+                <input
+                    type="text"
+                    onChange={onChange}
+                    name="name"
+                    value={name}
+                    placeholder="이름을 입력하세요"
+                    className={styles.name}
+                />
+                <input
+                    type="text"
+                    onChange={onChange}
+                    name="company"
+                    value={company}
+                    placeholder="회사를 입력하세요"
+                    className={styles.company}
+                />
             </div>
             <div>
-                <input type="text" name="job" value={job} placeholder="직업을 입력하세요" className={styles.job}/>
-                <input type="email" name="email" value={email} placeholder="이메일을 입력하세요" className={styles.email}/>
+                <input
+                    type="text"
+                    onChange={onChange}
+                    name="job"
+                    value={job}
+                    placeholder="직업을 입력하세요"
+                    className={styles.job}
+                />
+                <input
+                    type="email"
+                    onChange={onChange}
+                    name="email"
+                    value={email}
+                    placeholder="이메일을 입력하세요"
+                    className={styles.email}
+                />
             </div>
             <div>
-                <textarea name="introduce" placeholder="정보를 입력해주세요" value={introduce}></textarea>
+                <textarea
+                    onChange={onChange}
+                    name="introduce"
+                    placeholder="정보를 입력해주세요"
+                    value={introduce}
+                ></textarea>
             </div>
             <div>
                 <button>이미지 업로드</button>

@@ -8,8 +8,8 @@ import styles from './maker.module.css'
 
 const Maker = ({authService}) => {
 
-    const [cards, setCards] = useState([
-        {
+    const [cards, setCards] = useState({
+        '1': {
             id: '1',
             name: '송재혁',
             company: '구직중',
@@ -19,7 +19,7 @@ const Maker = ({authService}) => {
             fileName: 'Song',
             fileURL: null
         }
-    ]);
+    });
 
     const history = useHistory();
 
@@ -35,16 +35,27 @@ const Maker = ({authService}) => {
         })
     });
 
-    const addCard = card => {
-        const newCards = [...cards, card];
-        setCards(newCards);
+    const AddUpdateCard = card => {
+        setCards(cards => {
+            const updated = {...cards};
+            updated[card.id] = card;
+            return updated;
+        });
+    }
+
+    const deleteCard = card => {
+        setCards(cards => {
+            const updated = {...cards};
+            delete updated[card.id];
+            return updated;
+        });
     }
 
     return(
         <section className={styles.makerPageWrap}>
             <Header onLogout={onLogout}/>
             <div className={styles.makerWrap}>
-                <Editor cards={cards} addCard={addCard}/>
+                <Editor cards={cards} addCard={AddUpdateCard} updateCard={AddUpdateCard} deleteCard={deleteCard}/>
                 <Preview cards={cards}/>
             </div>
             <Footer makerDesign={"maker"}/>

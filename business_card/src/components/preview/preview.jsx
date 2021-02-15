@@ -11,7 +11,7 @@ const Preview = ({cards}) => {
                 Card Preview
             </h1>
             <ul>
-                {cards.map(card => <PreviewCard key={card.id} card={card}/>)}
+                {Object.keys(cards).map(key => <PreviewCard key={key} card={cards[key]}/>)}
             </ul>
         </section>
     );
