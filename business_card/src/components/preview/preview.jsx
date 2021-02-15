@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './preview.module.css';
+import PreviewForm from './previewForm/previewForm';
 
 const Preview = (props) => {
     
@@ -9,6 +10,8 @@ const Preview = (props) => {
             <h1 className={styles.previewTitle}>
                 Card Preview
             </h1>
+
+            <PreviewForm />
         </section>
     );
 };

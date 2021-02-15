@@ -18,6 +18,7 @@ form.editorForm input{
     margin: 0 5px;
     padding: 10px 10px;
     border: 0;
+    border-radius: 10px;
     background-color: makerSkyBlue;
     box-shadow: makerShadowInset;
 }
@@ -27,6 +28,12 @@ form.editorForm button{
     margin: 0 5px;
     padding: 10px 10px;
     border: 0;
+    border-radius: 5px;
+    outline: none;
     background-color: makerSkyBlue;
     box-shadow: makerShadow;
+}
+
+form.editorForm button:active{
+    box-shadow: makerShadowInset;
 }

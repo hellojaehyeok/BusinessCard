@@ -1,0 +1,40 @@
+@value makerShadow from '../../../common/color.css';
+
+div.previewForm{
+    width: 80%;
+    display: flex;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 20px;
+    text-align: left;
+    box-shadow: makerShadow;
+}
+
+div.ImgWrap{
+    width: 20%;
+}
+
+div.ImgWrap > img{
+    width: 100%;
+}
+
+div.textWrap{
+    width: 80%;
+    padding-left: 20px;
+}
+
+h2.name{
+    font-size: 20px;
+}
+
+div.company{
+    margin: 10px 0;
+}
+
+div.email{
+    margin-bottom: 10px;
+}
+
+p.introduce{
+
+}

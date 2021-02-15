@@ -20,8 +20,8 @@ const EditorForm = (props) => {
                 <input type="text" placeholder="소개를 입력하세요" className={styles.introduce}/><br />
             </div>
             <div>
-                <button>Submit</button>
-                <button>Delete</button>
+                <button>이미지 업로드</button>
+                <button>삭제</button>
             </div>
         </form>
     );
