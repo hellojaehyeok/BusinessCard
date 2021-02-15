@@ -21,7 +21,7 @@ const EditorForm = ({card}) => {
                 <input type="email" name="email" value={email} placeholder="이메일을 입력하세요" className={styles.email}/>
             </div>
             <div>
-                <textarea name="introduce" value={introduce}></textarea>
+                <textarea name="introduce" placeholder="정보를 입력해주세요" value={introduce}></textarea>
             </div>
             <div>
                 <button>이미지 업로드</button>
