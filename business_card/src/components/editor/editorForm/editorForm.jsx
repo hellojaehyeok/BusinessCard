@@ -1,4 +1,5 @@
-import React  from 'react';
+import React from 'react';
+import ImageFileInput from '../image_file_input/image_file_input';
 import styles from './editorForm.module.css';
 
 const EditorForm = ({card, updateCard, deleteCard}) => {
@@ -19,6 +20,14 @@ const EditorForm = ({card, updateCard, deleteCard}) => {
 
     const onSubmit = () => {
         deleteCard(card);
+    }
+
+    const imgClick = (e) => {
+        e.preventDefault();
+    }
+
+    const onChangeImg = e => {
+        console.log(e.currentTarget.url);
     }
 
     return(
@@ -68,7 +77,7 @@ const EditorForm = ({card, updateCard, deleteCard}) => {
                 ></textarea>
             </div>
             <div>
-                <button>이미지 업로드</button>
+                <ImageFileInput />
                 <button onClick={onSubmit}>삭제</button>
             </div>
         </form>
