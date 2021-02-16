@@ -16,8 +16,8 @@ const Maker = ({authService}) => {
             job: '프론트엔드 개발자',
             email: 'wakij6587@naver.com',
             introduce: '안녕하세요! 송재혁입니다.',
-            fileName: 'Song',
-            fileURL: null
+            fileName: 'song',
+            fileURL: '/images/song.jpg'
         }
     });
 
