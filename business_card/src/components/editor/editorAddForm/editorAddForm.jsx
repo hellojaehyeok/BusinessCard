@@ -1,7 +1,7 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import styles from './editorAddForm.module.css';
 
-const EditorAddForm = ({onAdd}) => {
+const EditorAddForm = ({FileInput, onAdd}) => {
 
     const formRef = useRef();
     const nameRef = useRef();
@@ -9,6 +9,7 @@ const EditorAddForm = ({onAdd}) => {
     const jobRef = useRef();
     const emailRef = useRef();
     const introduceRef = useRef();
+    const [imgData, setImgData] = useState({fileName:"", fileURL:""})
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -19,12 +20,17 @@ const EditorAddForm = ({onAdd}) => {
              job: jobRef.current.value || "",
              email: emailRef.current.value || "",
              introduce: introduceRef.current.value || "",
-             fileName: "",
-             fileURL: "",
+             fileName: imgData.fileName || "",
+             fileURL: imgData.fileURL || "",
         }
         formRef.current.reset();
+        setImgData({fileName:"", fileURL:""});
         onAdd(card);
-    }
+    };
+
+    const onFileChange = data => {
+        setImgData({fileName: data.name, fileURL: data.url})
+    };
 
     return(
         <form ref={formRef} className={styles.editorForm}>
@@ -40,7 +46,7 @@ const EditorAddForm = ({onAdd}) => {
                 <textarea ref={introduceRef} name="introduce" placeholder="정보를 입력해주세요"></textarea>
             </div>
             <div>
-                <button>이미지 업로드</button>
+                <FileInput name={imgData.fileName} onFileChange={onFileChange} />
                 <button onClick={onSubmit}>추가</button>
             </div>
         </form>

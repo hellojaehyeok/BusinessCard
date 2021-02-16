@@ -6,7 +6,7 @@ import Header from '../header/header';
 import Preview from '../preview/preview';
 import styles from './maker.module.css'
 
-const Maker = ({authService}) => {
+const Maker = ({FileInput, authService}) => {
 
     const [cards, setCards] = useState({
         '1': {
@@ -18,7 +18,7 @@ const Maker = ({authService}) => {
             introduce: '안녕하세요! 송재혁입니다.',
             fileName: 'song',
             fileURL: '/images/song.jpg'
-        }
+        },
     });
 
     const history = useHistory();
@@ -55,7 +55,13 @@ const Maker = ({authService}) => {
         <section className={styles.makerPageWrap}>
             <Header onLogout={onLogout}/>
             <div className={styles.makerWrap}>
-                <Editor cards={cards} addCard={AddUpdateCard} updateCard={AddUpdateCard} deleteCard={deleteCard}/>
+                <Editor
+                    FileInput={FileInput}
+                    cards={cards}
+                    addCard={AddUpdateCard}
+                    updateCard={AddUpdateCard}
+                    deleteCard={deleteCard}
+                />
                 <Preview cards={cards}/>
             </div>
             <Footer makerDesign={"maker"}/>

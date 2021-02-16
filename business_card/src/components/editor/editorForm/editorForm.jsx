@@ -1,8 +1,7 @@
 import React from 'react';
-import ImageFileInput from '../image_file_input/image_file_input';
 import styles from './editorForm.module.css';
 
-const EditorForm = ({card, updateCard, deleteCard}) => {
+const EditorForm = ({FileInput, card, updateCard, deleteCard}) => {
 
     const {name, company, job, email, introduce, fileName, fileURL} = card;
 
@@ -22,12 +21,13 @@ const EditorForm = ({card, updateCard, deleteCard}) => {
         deleteCard(card);
     }
 
-    const imgClick = (e) => {
-        e.preventDefault();
-    }
-
-    const onChangeImg = e => {
-        console.log(e.currentTarget.url);
+    const onFileChange = (data) => {
+        console.log(data);
+        updateCard({
+            ...card,
+            fileName: data.name,
+            fileURL: data.url
+        })
     }
 
     return(
@@ -77,7 +77,7 @@ const EditorForm = ({card, updateCard, deleteCard}) => {
                 ></textarea>
             </div>
             <div>
-                <ImageFileInput />
+                <FileInput name={fileName} onFileChange={onFileChange}/>
                 <button onClick={onSubmit}>삭제</button>
             </div>
         </form>
