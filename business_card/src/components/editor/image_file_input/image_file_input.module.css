@@ -1,8 +1,11 @@
-
+@value makerDarkGray, makerShadowInset from '../../../common/color.css';
 
 div.ImageButtonWrap{
     flex: 1;
     margin: 0 10px 0 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -13,6 +16,25 @@ div.ImageButtonWrap > input{
     height: 0;
 }
 
-div.ImageButtonWrap > button{
+div.ImageButtonWrap > button.button{
     width: 100%;
+}
+
+div.ImageButtonWrap > button.activeInput{
+    box-shadow: makerShadowInset;
+    color: makerDarkGray;
+}
+
+div.loading{
+    width: 15px;
+    height: 15px;
+    border: 2px dotted #d3d3d3;
+    border-top: 3px solid #aae1ff;
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin{
+    0%{transform: rotate(0deg);}
+    100%{transform: rotate(360deg);}
 }
