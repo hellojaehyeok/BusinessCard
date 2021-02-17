@@ -3,7 +3,7 @@ import styles from './editorForm.module.css';
 
 const EditorForm = ({FileInput, card, updateCard, deleteCard}) => {
 
-    const {name, company, job, email, introduce, fileName, fileURL} = card;
+    const {name, company, job, email, introduce, fileName} = card;
 
     const onChange = (e) => {
         if(e.currentTarget == null){
@@ -22,7 +22,6 @@ const EditorForm = ({FileInput, card, updateCard, deleteCard}) => {
     }
 
     const onFileChange = (data) => {
-        console.log(data);
         updateCard({
             ...card,
             fileName: data.name,
