@@ -1,7 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, memo } from 'react';
 import styles from './editorAddForm.module.css';
 
-const EditorAddForm = ({FileInput, onAdd}) => {
+const EditorAddForm = memo(({FileInput, onAdd}) => {
 
     const formRef = useRef();
     const nameRef = useRef();
@@ -51,6 +51,6 @@ const EditorAddForm = ({FileInput, onAdd}) => {
             </div>
         </form>
     );
-};
+});
 
 export default EditorAddForm;

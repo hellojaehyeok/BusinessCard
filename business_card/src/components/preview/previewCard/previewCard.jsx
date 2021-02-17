@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styles from './previewCard.module.css';
 
 const defaultImg = '/images/defaultImg.jpg';
 
-const PreviewCard = ({card}) => {
+const PreviewCard = memo(({card}) => {
     
-    const {name, company, job, email, introduce, fileName, fileURL} = card;
+    const {name, company, job, email, introduce, fileURL} = card;
 
     const url = fileURL || defaultImg;
 
@@ -22,6 +22,6 @@ const PreviewCard = ({card}) => {
 
         </li>
     );
-};
+});
 
 export default PreviewCard;
