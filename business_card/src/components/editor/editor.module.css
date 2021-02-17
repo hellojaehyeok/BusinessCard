@@ -3,6 +3,7 @@
 section.editor{
     flex-basis: 50%;
     text-align: center;
+    overflow-y: auto;
 }
 
 h1.editorTitle{

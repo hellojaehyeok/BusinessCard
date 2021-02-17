@@ -13,6 +13,7 @@ div.makerWrap{
     margin: 30px;
     box-shadow: makerShadow;
     border-radius: 30px;
+    min-height: 0;
 }
 
 @media screen and (max-width: 1000px){
