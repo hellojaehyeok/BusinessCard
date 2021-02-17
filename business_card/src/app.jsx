@@ -8,7 +8,7 @@ import {
   Route
 } from "react-router-dom";
 
-function App({FileInput, authService}) {
+function App({FileInput, authService, cardRepository}) {
 
 
   return (
@@ -21,7 +21,7 @@ function App({FileInput, authService}) {
           </Route>
 
           <Route exact path="/maker">
-            <Maker FileInput={FileInput} authService={authService} />
+            <Maker FileInput={FileInput} authService={authService} cardRepository={cardRepository} />
           </Route>
 
         </Switch>

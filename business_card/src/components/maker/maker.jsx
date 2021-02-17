@@ -6,20 +6,12 @@ import Header from '../header/header';
 import Preview from '../preview/preview';
 import styles from './maker.module.css'
 
-const Maker = ({FileInput, authService}) => {
+const Maker = ({FileInput, authService, cardRepository}) => {
 
-    const [cards, setCards] = useState({
-        '1': {
-            id: '1',
-            name: '송재혁',
-            company: '구직중',
-            job: '프론트엔드 개발자',
-            email: 'wakij6587@naver.com',
-            introduce: '안녕하세요! 송재혁입니다.',
-            fileName: 'song',
-            fileURL: '/images/song.jpg'
-        },
-    });
+    const [cards, setCards] = useState({});
+
+    const historyState = useHistory().state;
+    const [userId, setUserId] = useState(historyState && historyState.id);
 
     const history = useHistory();
 
@@ -29,7 +21,10 @@ const Maker = ({FileInput, authService}) => {
 
     useEffect(() => {
         authService.onAuthChange(user => {
-            if(!user) {
+            if(user) {
+                setUserId(user.uid);
+                console.log(user.uid)
+            } else{
                 history.push("/");
             }
         })
@@ -41,7 +36,8 @@ const Maker = ({FileInput, authService}) => {
             updated[card.id] = card;
             return updated;
         });
-    }
+        cardRepository.saveCard(userId, card);
+    };
 
     const deleteCard = card => {
         setCards(cards => {
@@ -49,7 +45,8 @@ const Maker = ({FileInput, authService}) => {
             delete updated[card.id];
             return updated;
         });
-    }
+        cardRepository.removeCard(userId, card);
+    };
 
     return(
         <section className={styles.makerPageWrap}>
