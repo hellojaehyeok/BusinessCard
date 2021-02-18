@@ -227,7 +227,242 @@ auth_service.js
 
 
 
+<hr />
 
 
 
+### Maker
+명함을 제작, 보관하는 페이지입니다.       
+아이디별로 데이터를 따로 저장하여 사용자마다 자신이 만들어둔 명함을       
+새로 고침을 하여도, 나갔다 다시 들어와도 볼 수 있도록 하였습니다.       
 
+
+maker.jsx
+
+    useEffect(() => {
+        if(!userId){
+            return
+        }
+        const stopSync = cardRepository.syncCards(userId, cards => {
+            setCards(cards);
+        })
+
+        return () => stopSync();
+    }, [userId, cardRepository])
+
+    useEffect(() => {
+        authService.onAuthChange(user => {
+            if(user) {
+                setUserId(user.uid);
+            } else{
+                history.push("/");
+            }
+        })
+    }, [authService, history]);
+
+
+props로 받아온 cardRepository의 syncCards에 명함의 정보와        
+접속 아이디를 넘겼습니다. firebaseDatabase의 경로를 아이디/cards로 지정해놔       
+사용자마다의 파일을 각각 만들고 받아온 명함의 정보를 저장하였습니다.       
+
+card_repository.js
+
+    syncCards(userId, onUpdate){
+        const ref = firebaseDatabase.ref(`${userId}/cards`);
+        ref.on('value', snapshot => {
+            const value = snapshot.val();
+            value && onUpdate(value);
+        });
+
+        return () => ref.off();
+    }
+
+
+### Editor
+maker에서 받은 명함들의 정보들을 map을 활용하여 화면에 나타내었습니다.       
+추가하는 폼은 따로 만들어 화면이 비는 것을 방지하고 언제든 명함을 추가할 수 있게 하였습니다.       
+
+    {Object.keys(cards).map(key => 
+        <EditorForm
+            key={key}
+            FileInput={FileInput}
+            card={cards[key]}
+            updateCard={updateCard}
+            deleteCard={deleteCard}
+        />)}
+
+    <EditorAddForm FileInput={FileInput} onAdd={addCard}/>
+
+
+### Editor Form
+onChange를 활용하여 사용자가 이미 만들어둔 명함을 수정하면 즉시 변경되도록 하였습니다.       
+preventDefault로 기본적인 기능은 막고 props로 받아온 updateCard를 활용하여        
+변경된 사항만 바뀌도록 하였습니다. delete 버튼 클릭 시 위와 마찬가지로        
+deleteCard를 활용하여 제거하였습니다.       
+
+editorForm.jsx
+
+    const onChange = (e) => {
+        if(e.currentTarget == null){
+            return;
+        }
+        e.preventDefault();
+        updateCard({
+            ...card,
+            [e.currentTarget.name]: e.currentTarget.value,
+        })
+    }
+    
+    const onSubmit = () => {
+        deleteCard(card);
+    }
+
+
+내용이 바뀌면 데이터에 있는 정보 또한 수정하기 위하여        
+cardRepository.saveCard(userId, card); 코드를 넣었습니다.       
+
+내용이 삭제되면 데이터에 있는 정보 또한 삭제하기 위하여       
+cardRepository.removeCard(userId, card); 코드를 넣었습니다.       
+
+maker.jsx
+
+    const AddUpdateCard = card => {
+        setCards(cards => {
+            const updated = {...cards};
+            updated[card.id] = card;
+            return updated;
+        });
+        cardRepository.saveCard(userId, card);
+    };
+
+    const deleteCard = card => {
+        setCards(cards => {
+            const updated = {...cards};
+            delete updated[card.id];
+            return updated;
+        });
+        cardRepository.removeCard(userId, card);
+    };
+
+
+card_repository.js
+
+    saveCard(userId, card){
+        firebaseDatabase.ref(`${userId}/cards/${card.id}`).set(card);
+    }
+
+    removeCard(userId, card){
+        firebaseDatabase.ref(`${userId}/cards/${card.id}`).remove();
+    }
+
+
+### Editor Add Form
+명함을 추가하기 위하여 만든 폼입니다.       
+사용자가 텍스트를 입력하면 그 값들을 card에 저장한 후        
+onAdd를 활용하여 정보를 넘겨 화면에 보여줍니다.       
+
+editorAddForm.jsx
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        const card = {
+                id: Date.now(),
+                name: nameRef.current.value || "",
+                company: companyRef.current.value || "",
+                job: jobRef.current.value || "",
+                email: emailRef.current.value || "",
+                introduce: introduceRef.current.value || "",
+                fileName: imgData.fileName || "",
+                fileURL: imgData.fileURL || "",
+        }
+        formRef.current.reset();
+        setImgData({fileName:"", fileURL:""});
+        onAdd(card);
+    };
+
+
+### 이미지 업로드 
+사용자의 컴퓨터에 있는 이미지를 받아와 화면에 표시하기 위하여       
+image_uploader.js 파일을 만든 후 cloudinary의 사이트에 있는 코드를 넣었습니다.       
+그 후 index.js 파일에서 가져와 ImageFileInput에 props로 전달시켰습니다.       
+이 컴포넌트를 props로 자식 요소에게 전달하여 이미지 업로드 버튼을 제작하였습니다.       
+이미지를 업로드하게 되면 cloudinary에서 절대 이미지 경로와 이미지 이름을 받게 되고       
+이를 화면에 표시하였습니다.       
+
+index.js
+
+    const imageUploader = new ImageUploader();
+    const FileInput = memo(props => (<ImageFileInput {...props} imageUploader={imageUploader}/>));
+
+input을 활용하여 파일을 업로드할 경우 ui가 아름답지 못하여 css로 안 보이게 하였고       
+버튼 클릭 시 input이 실행되도록 하였습니다. 이미지를 변경하면 로딩 스피너를 가 보이도록 하였고       
+업로드가 완료되면 로딩 스피너를 제거하고 이름이 보이도록 하였습니다.       
+
+image_file.input.jsx
+
+    const [loading, setLoading] = useState(false);
+
+    const inputRef = useRef();
+
+    const onChange = async e => {
+        setLoading(true);
+        const uploaded = await imageUploader.upload(e.target.files[0]);
+        setLoading(false);
+        onFileChange({
+            name: uploaded.original_filename,
+            url:uploaded.url,
+        })
+    } 
+
+    const onClickInput = (e) => {
+        e.preventDefault();
+        inputRef.current.click();
+    }
+    .
+    .
+    .
+    <input className={styles.imageInput} onChange={onChange} ref={inputRef} type="file" accept="image/*" name="profileImg"/>
+    {!loading && <button className={`${styles.button} ${name?styles.activeInput:""}`} onClick={onClickInput}>
+        {name || "이미지 업로드"}
+    </button>}
+    
+    {loading && <div className={styles.loading}></div>}
+
+
+
+<hr />
+
+### Preview
+Editor와 마찬가지로 map 을 이용하여 화면에 나타내었고        
+editor에서 받아온 정보들을 보여주었습니다.       
+
+preview.jsx
+
+    {Object.keys(cards).map(key => <PreviewCard key={key} card={cards[key]}/>)}
+
+
+previewCard.jsx
+
+    const {name, company, job, email, introduce, fileURL} = card;
+
+    const url = fileURL || defaultImg;
+
+    return(
+        <li className={styles.previewCard}>
+
+            <img className={styles.image} src={url} alt="프로필 이미지"/>
+            <div className={styles.textWrap}>
+                <h2 className={styles.name}>{name}</h2>
+                <p className={styles.company}>{company} {job}</p>
+                <p className={styles.email}>{email}</p>
+                <p className={styles.introduce}>{introduce}</p>
+            </div>
+
+        </li>
+
+
+<hr />
+
+
+송재혁입니다.      
+감사합니다.
