@@ -114,3 +114,120 @@ React Router를 사용하여 페이지 간 이동을 하였습니다.
 명함 제작 페이지 반응형
 
 <img src="./readImg/cardMedia.png" width="100%">
+
+
+
+<hr />
+
+
+### Login Page
+로그인 페이지입니다. 사용자는 구글과 깃허브 계정으로 로그인할 수 있으며,        
+로그인 시에는 React Router History를 이용하여 maker 페이지를 보여줍니다.        
+
+로그인 버튼 클릭 시 onLogin 함수가 실행됩니다. 상위 컴포넌트에서 받아온         
+authService 안에 있는 login이 실행되고 현재 버튼 안에 있는 텍스트 값을 받아와        
+firebase를 이용하여 해당 사이트에 로그인합니다.                
+로그인이 완료되면 history를 이용하여 페이지가 이동되고 state 안에         
+접속한 로그인의 아이디 값을 받아와 저장합니다.        
+
+사용자가 바뀔 경우 authService.onAuthChange가 실행되어        
+새로운 아이디를 전달합니다.        
+
+
+login.jsx
+
+    const history = useHistory();
+    const goMaker = (userId) => {
+        history.push({
+            pathname:"./maker",
+            state : {id : userId},
+        });
+    }
+
+    const onLogin = (e) =>{
+        authService //
+        .login(e.currentTarget.textContent)
+        .then(data => goMaker(data.user.uid));
+    };
+
+    useEffect(() => {
+        authService
+        .onAuthChange(user => {
+            user && goMaker(user.uid);
+        });
+    });
+    .
+    .
+    .
+    <button onClick={onLogin}>Google</button>
+
+    <button onClick={onLogin}>Github</button>
+
+
+auth_service.js
+
+    login(providerName){
+        const authProvider = this.getProvider(providerName);
+        return firebaseAuth.signInWithPopup(authProvider);
+    }
+
+    onAuthChange(onUserChanged){
+        firebaseAuth.onAuthStateChanged(user => {
+            onUserChanged(user);
+        })
+    }
+
+    getProvider(providerName){
+        switch(providerName){
+            case 'Google':
+                return googleProvider;
+            case 'Github':
+                return githubProvider;
+            default:
+                throw new Error(`not supported provider: ${providerName}`);
+        }
+    }
+
+
+
+
+<hr />
+
+
+### Header
+로그인 시 페이지 좌측 상단에 로그아웃 버튼이 생기도록 하였습니다.        
+login 화면에는 header에 onLogout을 전달하지 않아 버튼을 존재하지 않게 하고         
+maker 화면에서는 onLogout을 전달하여 버튼이 보이도록 하였습니다.        
+
+
+header.jsx
+
+    <header className={styles.header}>
+        <h1 className={styles.headerTitle}>Business Card Maker</h1>
+        {onLogout && <button className={styles.logoutButton} onClick={onLogout}>Logout</button>}
+    </header>
+
+
+로그아웃 버튼 클릭 시 props로 받은 onLogout 함수가 실행됩니다.        
+firebase에 제공하는 firebaseAuth.signOut()를 활용하여 로그아웃을 합니다.        
+
+maker.jsx
+
+    const onLogout = useCallback(
+        () => {
+            authService.logout();
+        }, [authService]
+    );
+
+auth_service.js
+
+    logout(){
+        firebaseAuth.signOut();
+    }
+
+
+
+
+
+
+
