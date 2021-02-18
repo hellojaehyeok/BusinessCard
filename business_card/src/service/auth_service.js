@@ -15,7 +15,6 @@ class AuthService{
 
     logout(){
         firebaseAuth.signOut();
-        console.log("logout");
     }
 
     getProvider(providerName){

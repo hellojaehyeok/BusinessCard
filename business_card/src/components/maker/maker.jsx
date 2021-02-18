@@ -73,7 +73,7 @@ const Maker = ({FileInput, authService, cardRepository}) => {
                 />
                 <Preview cards={cards}/>
             </div>
-            <Footer makerDesign={"maker"}/>
+            <Footer />
         </section>
     );
 
