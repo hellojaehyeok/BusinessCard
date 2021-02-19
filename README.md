@@ -464,5 +464,52 @@ previewCard.jsx
 <hr />
 
 
+## 마무리 정리
+1. 서버 쪽에서 데이터를 받아오는 경우 js 파일을 따로 만들어 index.js에서 받아온다.
+2. 컴포넌트를 가져와 props로 전달할 수 있다. {...props}를 사용하여야 확장성이 좋다.
+
+index.js
+
+    const imageUploader = new ImageUploader();
+    const FileInput = memo(props => (<ImageFileInput {...props} imageUploader={imageUploader}/>));
+
+3. memo, useCallback를 사용하면 불필요한 업데이트를 막을 수 있다.
+4. useCallback의 경우 한번 저장해두면 따로 설정하지 않는 이상 바뀌지 않기 때문에 조심하여야 한다. 
+5. 로딩 스피너 -> 로드가 되기 전 true 완료되면 false로 만든다.
+
+image_file_input.jsx
+
+    setLoading(true);
+    const uploaded = await imageUploader.upload(e.target.files[0]);
+    setLoading(false);
+    .
+    .
+    .
+    {!loading && <button className={`${styles.button} ${name?styles.activeInput:""}`} onClick={onClickInput}>
+        {name || "이미지 업로드"}
+    </button>}
+
+6. 중복되는 css는 따로 파일을 만들어 @value로 만든 후 다른 파일에서 가져다 사용한다. 
+7. 배열의 이용하여 state를 계속 업데이트할 경우 배열의 길이가 늘어나면 성능이 좋지 않다.
+따라서 오브젝트 형식으로 만들고 수정하고 싶은 부분의 키값만 가져와 그곳만 수정한다.       
+오브젝트를 이용하면 map은 사용하지 못해 Object.keys(cards)를 이용하며 배열로 바꾼다.      
+
+maker.js
+
+    setCards(cards => {
+        const updated = {...cards};
+        updated[card.id] = card;
+        return updated;
+    });
+
+editor.jsx
+
+    Object.keys(cards).map(key =>...
+
+
+
+<hr />
+
+
 송재혁입니다.      
 감사합니다.
