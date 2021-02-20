@@ -64,6 +64,21 @@ firebase.js
     export const githubProvider = new firebase.auth.GithubAuthProvider();
 
 
+Firebase를 사용하여 호스팅 하여 배포하였습니다.
+제작 파일을 build를 하고 firebase를 설치 및 로그인합니다.
+초기화 단계에서 자신의 상황에 맞게 선택한 후 deploy를 하면 호스팅이 완료됩니다.
+
+    npm run build
+
+    npm install firebase-tools -g
+
+    firebase login
+    
+    firebase init
+
+    firebase deploy
+
+
 <hr />
 
 
