@@ -1,6 +1,5 @@
 import styles from './app.module.css';
 import Login from './components/logIn/login'
-import Header from './components/header/header'
 import Maker from './components/maker/maker';
 import {
   BrowserRouter,
